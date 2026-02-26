@@ -15,8 +15,7 @@ class InternAdmin(admin.ModelAdmin):
         'start_date',
         'end_date',
         'days_left',
-        'status_display',
-        'edit_button'
+        'status_and_actions'
     ]
     list_filter = ['department', 'created_at']
     search_fields = ['full_name', 'passport_id', 'department']
@@ -48,29 +47,24 @@ class InternAdmin(admin.ModelAdmin):
         return '-'
     photo_preview_display.short_description = 'Rasm'
 
-    def status_display(self, obj):
-        """Display status with colors"""
+    def status_and_actions(self, obj):
+        """Display status and edit button on the same line"""
         if obj.status == 'Faol':
             color = 'green'
             text = 'Faol'
         else:
             color = 'red'
             text = 'Tugagan'
-        return format_html(
-            '<span style="color: white; background-color: {}; padding: 5px 10px; border-radius: 3px;">{}</span>',
-            color,
-            text
-        )
-    status_display.short_description = 'Holati'
-
-    def edit_button(self, obj):
-        """Display green edit button"""
+        
         url = reverse('admin:interns_intern_change', args=[obj.pk])
         return format_html(
-            '<a href="{}" style="background-color: #28a745; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;">Tahrirlash</a>',
+            '<span style="color: white; background-color: {}; padding: 6px 12px; border-radius: 4px; white-space: nowrap; font-weight: 500; min-width: 80px; display: inline-block; text-align: center; margin-right: 8px;">{}</span>'
+            '<a href="{}" style="background-color: #28a745; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px; font-weight: 500; white-space: nowrap; min-width: 95px; display: inline-block; text-align: center;">Tahrirlash</a>',
+            color,
+            text,
             url
         )
-    edit_button.short_description = 'Amallar'
+    status_and_actions.short_description = 'Holati'
 
     def days_left(self, obj):
         """Display days left"""
