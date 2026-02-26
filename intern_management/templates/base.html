@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}O'zbekiston Respublikasi Oliy Ta'lim, Fan va Innovatsiyalar Vazirligi{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        * {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar.bg-primary {
+            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;
+        }
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+        .navbar-logo {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+        .navbar-brand:hover .navbar-logo {
+            transform: scale(1.05);
+        }
+        .navbar-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            line-height: 1.4;
+        }
+        @media (max-width: 768px) {
+            .navbar-title {
+                font-size: 0.85rem;
+            }
+            .navbar-logo {
+                height: 45px;
+            }
+        }
+        @media (max-width: 576px) {
+            .navbar-title {
+                font-size: 0.75rem;
+            }
+            .navbar-logo {
+                height: 40px;
+            }
+        }
+        .navbar-subtitle {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+        .nav-link {
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+        .search-container {
+            margin: 20px 0;
+        }
+        .table-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        }
+        .photo-cell {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .photo-cell img {
+            border-radius: 8px;
+            max-width: 120px;
+            height: 120px;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .avatar-placeholder {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 48px;
+            margin: 0 auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .status-active {
+            color: #198754;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .status-expired {
+            color: #dc3545;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        table tbody tr.table-danger {
+            background-color: #f8d7da !important;
+        }
+        table tbody tr.table-danger:hover {
+            background-color: #f5c2c7 !important;
+        }
+        .intern-table {
+            font-size: 16px;
+        }
+        .intern-table tbody td {
+            padding: 18px 12px;
+            vertical-align: middle;
+        }
+        .intern-table thead th {
+            padding: 15px 12px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .badge {
+            font-size: 15px;
+            padding: 8px 12px;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center py-2" href="/" title="O'zbekiston Respublikasi Oliy taʼlim, fan va innovatsiyalar vazirligi">
+                <img src="{% static 'ministry-logo.jpg' %}" alt="Vazirlik logotipi" class="navbar-logo me-3">
+                <span class="navbar-title">O'zbekiston Respublikasi Oliy taʼlim, <br> fan va innovatsiyalar vazirligi</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-2" href="/" aria-label="Bosh sahifaga o'tish">
+                            <i class="bi bi-house-door me-1"></i>
+                            <span>Bosh sahifa</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Spacer for fixed navbar -->
+    <div style="height: 80px;"></div>
+
+    <div class="container mt-4 mb-5">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="bg-light py-4 mt-5 border-top">
+        <div class="container text-center">
+            <p class="text-muted mb-0 small">&copy; 2026 O'zbekiston Respublikasi Oliy Ta'lim, Fan va Innovatsiyalar Vazirligi. Barcha huquqlar himoyalangan.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}Amaliyotchilar - O'zbekiston Respublikasi Oliy Ta'lim, Fan va Innovatsiyalar Vazirligi{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mb-4">Amaliyotchilar boshqarish tizimi</h1>
+        
+        <!-- Search Form -->
+        <div class="search-container">
+            <form method="get" class="row g-2" id="search-form">
+                <div class="col-md-8">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        name="q" 
+                        id="search-input"
+                        placeholder="To'liq ismi, passport raqami yoki bo'limi bo'yicha izlash..." 
+                        value="{{ search_query }}"
+                        autocomplete="off"
+                    >
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary w-100">Izlash</button>
+                    {% if search_query %}
+                        <a href="/" class="btn btn-secondary w-100 mt-2">Tozalash</a>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+
+        <!-- Results count -->
+        <p class="text-muted mb-3">
+            {% if search_query %}
+                "<strong>{{ search_query }}</strong>" uchun <strong>{{ interns.count }}</strong> natija topildi
+            {% else %}
+                Jami amaliyotchilar: <strong>{{ interns.count }}</strong>
+            {% endif %}
+        </p>
+
+        <!-- Table -->
+        <div class="table-container">
+            {% if interns %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover intern-table">
+                        <thead class="table-primary">
+                            <tr>
+                                <th>Rasm</th>
+                                <th>To'liq ismi</th>
+                                <th>Pasport</th>
+                                <th>Bo'lim</th>
+                                <th>Boshlanish sanasi</th>
+                                <th>Tugash sanasi</th>
+                                <th>Qolgan kunlar</th>
+                                <th>Holati</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for intern in interns %}
+                                <tr {% if intern.status == 'Tugagan' %}class="table-danger"{% endif %}>
+                                    <td class="photo-cell">
+                                        {% if intern.photo %}
+                                            <img src="{{ intern.photo.url }}" alt="{{ intern.full_name }}" title="{{ intern.full_name }}">
+                                        {% else %}
+                                            <div class="avatar-placeholder" title="Rasm yo'q">{{ intern.full_name|first|upper }}</div>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ intern.full_name }}</td>
+                                    <td>{{ intern.passport_id }}</td>
+                                    <td>{{ intern.department }}</td>
+                                    <td>{{ intern.start_date|date:"M d, Y" }}</td>
+                                    <td>{{ intern.end_date|date:"M d, Y" }}</td>
+                                    <td>
+                                        <span class="badge {% if intern.status == 'Faol' %}bg-success{% else %}bg-danger{% endif %}">
+                                            {{ intern.days_left }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {% if intern.status == 'Faol' %}
+                                            <span class="status-active">✓ Faol</span>
+                                        {% else %}
+                                            <span class="status-expired">✕ Tugagan</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info" role="alert">
+                    {% if search_query %}
+                        Qidiruv bo'yicha natija topilmadi. <a href="/">Izlashni tozalash</a>
+                    {% else %}
+                        Amaliyotchilar topilmadi.
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-input');
+    const searchForm = document.getElementById('search-form');
+    let searchTimeout;
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            // Clear previous timeout
+            clearTimeout(searchTimeout);
+            
+            // Submit form after 500ms of typing
+            searchTimeout = setTimeout(function() {
+                searchForm.submit();
+            }, 500);
+        });
+    }
+});
+</script>
+{% endblock %}
