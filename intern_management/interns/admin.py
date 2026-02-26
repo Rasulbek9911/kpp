@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
+from django.urls import reverse
 from .models import Intern
 
 
@@ -14,7 +15,8 @@ class InternAdmin(admin.ModelAdmin):
         'start_date',
         'end_date',
         'days_left',
-        'status_display'
+        'status_display',
+        'edit_button'
     ]
     list_filter = ['department', 'created_at']
     search_fields = ['full_name', 'passport_id', 'department']
@@ -60,6 +62,15 @@ class InternAdmin(admin.ModelAdmin):
             text
         )
     status_display.short_description = 'Holati'
+
+    def edit_button(self, obj):
+        """Display green edit button"""
+        url = reverse('admin:interns_intern_change', args=[obj.pk])
+        return format_html(
+            '<a href="{}" style="background-color: #28a745; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;">Tahrirlash</a>',
+            url
+        )
+    edit_button.short_description = 'Amallar'
 
     def days_left(self, obj):
         """Display days left"""
